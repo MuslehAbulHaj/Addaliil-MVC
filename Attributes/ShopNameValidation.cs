@@ -6,7 +6,7 @@ namespace Addaliil_MVC.Attributes
     public class ShopNameValidation : ValidationAttribute
     {
 
-        private readonly List<string> _reservedWords = new List<string>
+        public static readonly List<string> _reservedWords = new List<string>
         {
             "shop",
             "product",

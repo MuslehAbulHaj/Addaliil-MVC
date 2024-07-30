@@ -32,16 +32,18 @@ app.UseAuthorization();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
+
 );
+
 app.MapControllerRoute(
     name: "shop",
-    pattern: "{shopName}",
+    pattern: "{shopName}/{action=Details}",
     defaults: new { controller = "Shop", action = "Details" }
 );
+
+
 
 app.Run();

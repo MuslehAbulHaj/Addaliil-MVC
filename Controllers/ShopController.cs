@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Addaliil_MVC.Data;
 using Addaliil_MVC.Models;
+using Addaliil_MVC.Attributes;
 
 namespace Addaliil_MVC.Controllers
 {
@@ -55,8 +56,11 @@ namespace Addaliil_MVC.Controllers
             else
             {
                 // Handle case when productName is provided
-                var shop = await _context.Shops.Where(s => s.Name.ToLower() == shopName.ToLower()).FirstAsync();
-                if (shop == null) { return NotFound(); }
+                var shop = await _context.Shops.Where(s => s.Name.ToLower() == shopName.ToLower()).FirstOrDefaultAsync();
+                if (shop == null)
+                {
+                    return RedirectToRoute("default"); // Your default view
+                }
                 return View("Details", shop); // Your view for the product
             }
         }
@@ -75,13 +79,22 @@ namespace Addaliil_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,DisplayName,Description")] Shop shop)
         {
+            
+            if (await _context.Shops.SingleOrDefaultAsync(x=> x.Name .Contains(shop.Name) ) == null)
+            {
+                ModelState.AddModelError("name", "this name reserved"); // adding custom error inside the post method,
+                                                                        // if we didn't specify the property name "name" it will not display
+                                                                        // error below the field but it will display in summury
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(shop);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Created successfully";
                 return RedirectToRoute("shop", new { shopName = shop.Name });
             }
-            return View(shop);
+            //in create view if we want to display only errors that's not related to Model properties we change asp-validation-summary="ModelOnly" instead of "All"
+            return View();
         }
 
         // GET: Shops/Edit/5
@@ -125,6 +138,8 @@ namespace Addaliil_MVC.Controllers
                     {
                         _context.Update(shopNew);
                         await _context.SaveChangesAsync();
+                        TempData["success"] = "Updated successfully";
+
                     }
                     else { return View(shopNew); }
                 }
@@ -139,9 +154,10 @@ namespace Addaliil_MVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToRoute("shop", new { shopName = shop.Name });
+                var url = Url.Action("Details", new { shopName = shop.Name });
+                return Redirect(url);
             }
-            return RedirectToRoute("shop", new { shopName = shop.Name });
+            return View();
         }
 
         // GET: Shops/Delete/5
@@ -172,7 +188,7 @@ namespace Addaliil_MVC.Controllers
             {
                 _context.Shops.Remove(shop);
             }
-
+            TempData["success"] = "Deteled successfully";
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
