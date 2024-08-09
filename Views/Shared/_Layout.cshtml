@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&display=swap" rel="stylesheet"> *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Addaliil_MVC.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" herf="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    @* <link rel="stylesheet" href="~/Addaliil_MVC.styles.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" herf="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" /> *@
 </head>
 <body dir="rtl">
     <header>
@@ -39,6 +39,17 @@
             @RenderBody()
         </main>
     </div>
+    @* <div id="wrapper" ng-cloak>
+        @{
+            await Html.RenderPartialAsync("_Navigation");
+        }
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div id="toufiqElasy">@RenderBody()</div>
+            </div>
+
+        </div>
+    </div> *@
 
     <footer class="border-top footer text-muted">
         <div class="container">

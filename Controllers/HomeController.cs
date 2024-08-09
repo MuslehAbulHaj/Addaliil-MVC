@@ -1,8 +1,8 @@
-using Addaliil_MVC.Models;
+using Addaliil.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Addaliil_MVC.Controllers
+namespace Addaliil.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -12,7 +12,6 @@ namespace Addaliil_MVC.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();

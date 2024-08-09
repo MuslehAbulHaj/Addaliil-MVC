@@ -1,5 +1,6 @@
-using Addaliil_MVC.Data;
-using Addaliil_MVC.Services;
+using Addaliil.DataAccess;
+using Addaliil.DataAccess.Interfaces;
+using Addaliil.DataAccess.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,17 +33,26 @@ app.UseAuthorization();
 //app.MapControllerRoute(
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=Home}/{action=Index}/{id?}",
+    defaults: new { controller = "Home", action = "Index"}
+
 
 );
-
 app.MapControllerRoute(
     name: "shop",
     pattern: "{shopName}/{action=Details}",
     defaults: new { controller = "Shop", action = "Details" }
 );
+app.MapControllerRoute(
+    name: "root",
+    pattern: "",
+    defaults: new { controller = "Home", action = "Index" }
+);
+
+
 
 
 

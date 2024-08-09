@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Addaliil.DataAccess;
+using Addaliil.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Addaliil_MVC.Data;
-using Addaliil_MVC.Models;
 
-namespace Addaliil_MVC.Controllers
+namespace Addaliil.Web.Controllers
 {
     public class ProductsController : Controller
     {

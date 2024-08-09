@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Addaliil_MVC.Data;
-using Addaliil_MVC.Models;
-using Addaliil_MVC.Attributes;
+using Addaliil.Models;
+using Addaliil.DataAccess;
 
-namespace Addaliil_MVC.Controllers
+namespace Addaliil.Web.Controllers
 {
     //[Route("[controller]")]
     public class ShopController : Controller
@@ -91,7 +85,7 @@ namespace Addaliil_MVC.Controllers
                 _context.Add(shop);
                 await _context.SaveChangesAsync();
                 TempData["success"] = "Created successfully";
-                return RedirectToRoute("shop", new { shopName = shop.Name });
+                return LocalRedirect("~/" + shop.Name);
             }
             //in create view if we want to display only errors that's not related to Model properties we change asp-validation-summary="ModelOnly" instead of "All"
             return View();
@@ -155,7 +149,7 @@ namespace Addaliil_MVC.Controllers
                     }
                 }
                 var url = Url.Action("Details", new { shopName = shop.Name });
-                return Redirect(url);
+                return LocalRedirect("~/"+shop.Name);
             }
             return View();
         }
